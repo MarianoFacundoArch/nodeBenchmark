@@ -34,5 +34,8 @@ if (cluster.isMaster) {
     });
   });
 
+  app.get("/benchmark2", async (req, res) => {
+    res.send({ status: "OK" });
+  });
   app.listen(3000);
 }
