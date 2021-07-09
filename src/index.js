@@ -23,17 +23,15 @@ if (cluster.isMaster) {
   var app = express();
 
   app.get("/benchmark", async (req, res) => {
-    const textContent = await fs.readFile(
-      path.join(__dirname, "../contentFile"),
-      "utf8",
-      (err, data) => {
-        const processedData = crypto
-          .createHash("sha256")
-          .update(data)
-          .digest("base64");
-        res.send({ content: processedData });
+    fs.readFile(path.join(__dirname, "../contentFile"), "utf8", (err, data) => {
+      let result = "";
+
+      for (let i = 0; i <= 40000; i++) {
+        result =
+          result + crypto.createHash("sha256").update(data).digest("base64");
       }
-    );
+      res.send({ content: result });
+    });
   });
 
   app.listen(3000);
